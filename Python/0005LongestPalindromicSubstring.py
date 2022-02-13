@@ -1,11 +1,21 @@
 #暴力解法
+#生成所有子字符串，筛掉重复子字符串，
 class Solution:
-    def longestPalindrome(self, s: str) -> str:
-        maxl,max_len,n = 0,0,len(s)
-        for i in range(2*n-1):
-            l,r = i//2,i//2+i%2
-            while l>=0 and r < n and s[l]==s[r]:
-                if r-l+1>max_len: maxl,max_len = l,r-l+1
-                l-=1
-                r+=1
-        return s[maxl:maxl+max_len]
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        if not s: return 0
+        #防止单字符进入循环
+        if len(s)==1: return s
+        max_size=[]
+        for i in range(len(s)):
+            #注意避免本位和增加最后一位
+            for j in range(i+1,len(s)+1):
+                x,y=i,j
+                print(s[x:y])
+                while(x<y):
+                    if s[x]!=s[y-1]:
+                        break
+                    x=x+1
+                    y=y-1
+                if x-y==1 or y-x==1:
+                    if len(max_size)<len(s[x:y]): max_size=s[x:y]
+        return max(max_size)
